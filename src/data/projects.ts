@@ -1,0 +1,61 @@
+import type { Project } from "@/types";
+
+export const projects: Project[] = [
+  {
+    id: "smartshift",
+    technologies: ["React", "Node.js", "TypeScript", "PostgreSQL"],
+    images: [
+      "/images/projects/smartshift/1.png",
+      "/images/projects/smartshift/2.png",
+      "/images/projects/smartshift/3.png",
+      "/images/projects/smartshift/4.png",
+      "/images/projects/smartshift/5.png",
+      "/images/projects/smartshift/6.png",
+      "/images/projects/smartshift/7.png",
+      "/images/projects/smartshift/8.png",
+    ],
+    featured: true,
+    category: "fullstack",
+    proof: "private",
+  },
+  {
+    id: "playsmart",
+    technologies: ["Next.js", "Python", "AI/ML", "FastAPI"],
+    images: ["/images/projects/placeholder.svg"],
+    featured: false,
+    category: "fullstack",
+    proof: "concept",
+  },
+  {
+    id: "sportzone",
+    technologies: ["React Native", "Firebase", "Node.js", "TypeScript"],
+    images: ["/images/projects/placeholder.svg"],
+    featured: false,
+    category: "mobile",
+    proof: "concept",
+  },
+  {
+    id: "poop-bags",
+    technologies: ["React Native", "Maps API", "Node.js", "MongoDB"],
+    images: ["/images/projects/placeholder.svg"],
+    featured: false,
+    category: "mobile",
+    proof: "concept",
+  },
+  {
+    id: "zvi-kadocs",
+    technologies: ["React", "Next.js", "TypeScript", "PDF"],
+    images: ["/images/projects/placeholder.svg"],
+    featured: false,
+    category: "web",
+    proof: "private",
+  },
+  {
+    id: "shalachti",
+    technologies: ["React Native", "Node.js", "Firebase", "Mobile"],
+    images: ["/images/projects/placeholder.svg"],
+    featured: false,
+    category: "mobile",
+    proof: "published",
+  },
+];
