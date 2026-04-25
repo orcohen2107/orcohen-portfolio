@@ -205,6 +205,7 @@ export function Projects() {
                     images={activeProject.images}
                     alt={`${activeCopy.title} — ${activeCopy.description}`}
                     variant="featured"
+                    imageFit={activeProject.imageFit}
                   />
                 </div>
               </div>

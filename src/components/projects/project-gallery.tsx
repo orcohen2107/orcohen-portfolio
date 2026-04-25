@@ -14,9 +14,15 @@ type ProjectGalleryProps = {
   images: string[];
   alt: string;
   variant: "featured" | "card";
+  imageFit?: "cover" | "contain";
 };
 
-export function ProjectGallery({ images, alt, variant }: ProjectGalleryProps) {
+export function ProjectGallery({
+  images,
+  alt,
+  variant,
+  imageFit = "cover",
+}: ProjectGalleryProps) {
   const { t } = useLocale();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -118,7 +124,11 @@ export function ProjectGallery({ images, alt, variant }: ProjectGalleryProps) {
               src={src}
               alt={`${alt} — ${i + 1}`}
               fill
-              className="object-cover object-top"
+              className={
+                imageFit === "contain"
+                  ? "object-contain bg-surface object-center"
+                  : "object-cover object-top"
+              }
               sizes={
                 variant === "featured"
                   ? "(max-width: 1024px) 100vw, 50vw"

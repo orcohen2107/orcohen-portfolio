@@ -3,6 +3,7 @@ export type Project = {
   technologies: string[];
   /** Screenshots — horizontal gallery; first image is the cover */
   images: string[];
+  imageFit?: "cover" | "contain";
   liveUrl?: string;
   githubUrl?: string;
   featured: boolean;
