@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "@/i18n/locale-provider";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { siteConfig } from "@/data/site-config";
 
 const NAV_HREFS = [
   "#about",
-  "#skills",
   "#projects",
   "#experience",
   "#contact",
@@ -21,7 +21,6 @@ export function Navbar() {
 
   const labels = [
     t.nav.about,
-    t.nav.skills,
     t.nav.projects,
     t.nav.experience,
     t.nav.contact,
@@ -83,7 +82,7 @@ export function Navbar() {
       >
         <div className="flex justify-between items-center w-full px-6 py-4 max-w-[1200px] mx-auto gap-4">
           <a
-            href="#"
+            href="#page-top"
             className="text-xl font-bold tracking-tighter text-on-surface shrink-0"
           >
             Or Cohen
@@ -107,12 +106,14 @@ export function Navbar() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <LanguageSwitcher />
-            <a
-              href="/resume.pdf"
-              className="hidden md:inline-flex px-4 lg:px-5 py-2 rounded-lg border border-outline-variant/20 text-sm font-medium font-mono uppercase tracking-wider hover:bg-white/5 transition-all duration-300 whitespace-nowrap"
-            >
-              {t.nav.resume}
-            </a>
+            {siteConfig.resumeUrl ? (
+              <a
+                href={siteConfig.resumeUrl}
+                className="hidden md:inline-flex px-4 lg:px-5 py-2 rounded-lg border border-outline-variant/20 text-sm font-medium font-mono uppercase tracking-wider hover:bg-white/5 transition-all duration-300 whitespace-nowrap"
+              >
+                {t.nav.resume}
+              </a>
+            ) : null}
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -172,15 +173,17 @@ export function Navbar() {
                   {labels[i]}
                 </motion.a>
               ))}
-              <motion.a
-                href="/resume.pdf"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_HREFS.length * 0.1 }}
-                className="px-8 py-3 rounded-xl border border-outline-variant/20 font-mono uppercase tracking-wider text-sm"
-              >
-                {t.nav.resume}
-              </motion.a>
+              {siteConfig.resumeUrl ? (
+                <motion.a
+                  href={siteConfig.resumeUrl}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: NAV_HREFS.length * 0.1 }}
+                  className="px-8 py-3 rounded-xl border border-outline-variant/20 font-mono uppercase tracking-wider text-sm"
+                >
+                  {t.nav.resume}
+                </motion.a>
+              ) : null}
             </nav>
           </motion.div>
         )}

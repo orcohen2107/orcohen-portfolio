@@ -1,166 +1,246 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import { ProjectGallery } from "@/components/projects/project-gallery";
 import { FadeIn } from "@/components/motion/fade-in";
-import {
-  StaggerChildren,
-  StaggerItem,
-} from "@/components/motion/stagger-children";
 import { useLocale } from "@/i18n/locale-provider";
 
 export function Projects() {
   const { t } = useLocale();
-  const featuredProject = projects.find((p) => p.featured);
-  const otherProjects = projects.filter((p) => !p.featured);
-
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeProject = projects[activeIndex];
   const copyFor = (id: string) => t.projects.items[id];
+  const activeCopy = t.projects.items[activeProject.id];
+
+  const proofLabelFor = (proof: (typeof projects)[number]["proof"]) =>
+    proof === "private"
+      ? t.projects.privateProof
+      : proof === "published"
+        ? t.projects.publishedProof
+        : t.projects.conceptProof;
+
+  const goToProject = (index: number) => {
+    const nextIndex = (index + projects.length) % projects.length;
+    setActiveIndex(nextIndex);
+  };
 
   return (
     <section id="projects" aria-labelledby="projects-heading">
       <FadeIn>
         <div className="mb-16">
-          <span className="font-mono text-xs text-secondary mb-4 block uppercase tracking-widest">
+          <span className="mb-4 block font-mono text-xs uppercase tracking-widest text-secondary">
             {t.projects.kicker}
           </span>
-          <h2
-            id="projects-heading"
-            className="text-5xl font-bold tracking-tight"
-          >
-            {t.projects.heading}
-          </h2>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 id="projects-heading" className="text-5xl font-bold tracking-tight">
+                {t.projects.heading}
+              </h2>
+              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-on-surface-variant">
+                {t.projects.intro}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 self-start lg:self-auto">
+              <button
+                type="button"
+                onClick={() => goToProject(activeIndex - 1)}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant/20 bg-surface-container-low text-on-surface transition-colors hover:border-primary/40 hover:text-primary"
+                aria-label={t.projects.gallery.prev}
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.8}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => goToProject(activeIndex + 1)}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant/20 bg-surface-container-low text-on-surface transition-colors hover:border-primary/40 hover:text-primary"
+                aria-label={t.projects.gallery.next}
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.8}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </FadeIn>
 
-      <div className="space-y-16">
-        {featuredProject && (
-          <FadeIn>
-            <article className="group relative bg-surface-container-low rounded-2xl overflow-hidden flex flex-col lg:flex-row items-stretch">
-              <div className="p-12 lg:w-1/2 flex flex-col justify-center">
-                <div className="flex gap-2 mb-6 flex-wrap">
-                  {featuredProject.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 rounded-full bg-primary/10 text-primary font-mono text-[10px] uppercase tracking-widest"
-                    >
-                      {tech}
+      <div className="space-y-8">
+        <div className="overflow-hidden rounded-[2rem] border border-outline-variant/10 bg-surface-container-low shadow-2xl shadow-black/20">
+          <AnimatePresence mode="wait">
+            <motion.article
+              key={activeProject.id}
+              initial={{ opacity: 0, x: 28 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -28 }}
+              transition={{ duration: 0.32, ease: "easeOut" }}
+              className="grid lg:grid-cols-[1.05fr_0.95fr]"
+            >
+              <div className="flex flex-col justify-between p-8 sm:p-10 lg:p-12">
+                <div>
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-outline-variant/20 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                      {proofLabelFor(activeProject.proof)}
                     </span>
-                  ))}
+                    <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
+                      {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                    {activeCopy.title}
+                  </h3>
+                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-on-surface-variant">
+                    {activeCopy.longDescription}
+                  </p>
+
+                  <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+                    <div className="rounded-2xl border border-outline-variant/10 bg-surface px-4 py-4">
+                      <dt className="mb-2 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                        {t.projects.roleLabel}
+                      </dt>
+                      <dd className="text-sm leading-relaxed">{activeCopy.role}</dd>
+                    </div>
+                    <div className="rounded-2xl border border-outline-variant/10 bg-surface px-4 py-4">
+                      <dt className="mb-2 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                        {t.projects.focusLabel}
+                      </dt>
+                      <dd className="text-sm leading-relaxed">{activeCopy.focus}</dd>
+                    </div>
+                    <div className="rounded-2xl border border-outline-variant/10 bg-surface px-4 py-4">
+                      <dt className="mb-2 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                        {t.projects.proofLabel}
+                      </dt>
+                      <dd className="text-sm leading-relaxed">{activeCopy.proofNote}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-8">
+                    <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                      {t.projects.highlightsLabel}
+                    </p>
+                    <ul className="space-y-3 text-sm text-on-surface-variant">
+                      {activeCopy.highlights.map((highlight) => (
+                        <li key={highlight} className="flex items-start gap-3">
+                          <span
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                            aria-hidden="true"
+                          />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <h3 className="text-3xl font-bold mb-4">
-                  {copyFor(featuredProject.id).title}
-                </h3>
-                <p className="text-on-surface-variant mb-8 leading-relaxed">
-                  {copyFor(featuredProject.id).longDescription}
-                </p>
-                <div className="flex gap-4 flex-wrap">
-                  {featuredProject.liveUrl && (
-                    <a
-                      href={featuredProject.liveUrl}
-                      className="text-primary font-semibold flex items-center gap-2 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t.projects.viewProject}
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
+
+                <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    {activeProject.technologies.slice(0, 4).map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M7 17L17 7M17 7H7M17 7v10"
-                        />
-                      </svg>
-                    </a>
-                  )}
-                  {featuredProject.githubUrl && (
-                    <a
-                      href={featuredProject.githubUrl}
-                      className="text-on-surface-variant font-semibold flex items-center gap-2 hover:text-primary transition-colors"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t.projects.sourceCode}
-                    </a>
-                  )}
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-4">
+                    {activeProject.liveUrl ? (
+                      <a
+                        href={activeProject.liveUrl}
+                        className="font-semibold text-primary hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t.projects.viewProject}
+                      </a>
+                    ) : null}
+                    {activeProject.githubUrl ? (
+                      <a
+                        href={activeProject.githubUrl}
+                        className="font-semibold text-on-surface-variant transition-colors hover:text-primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t.projects.sourceCode}
+                      </a>
+                    ) : null}
+                    {!activeProject.liveUrl && !activeProject.githubUrl ? (
+                      <span className="text-sm text-on-surface-variant">
+                        {t.projects.requestWalkthrough}
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-              <div className="lg:w-1/2 relative min-h-[400px] w-full flex flex-col border-outline-variant/10 lg:border-s">
-                <div className="relative flex-1 min-h-[280px] lg:min-h-[400px]">
+
+              <div className="border-t border-outline-variant/10 lg:border-s lg:border-t-0">
+                <div className="relative h-full min-h-[320px] lg:min-h-[720px]">
                   <ProjectGallery
-                    images={featuredProject.images}
-                    alt={`${copyFor(featuredProject.id).title} — ${copyFor(featuredProject.id).description}`}
+                    images={activeProject.images}
+                    alt={`${activeCopy.title} — ${activeCopy.description}`}
                     variant="featured"
                   />
                 </div>
               </div>
-            </article>
-          </FadeIn>
-        )}
+            </motion.article>
+          </AnimatePresence>
+        </div>
 
-        <StaggerChildren className="grid md:grid-cols-2 gap-8">
-          {otherProjects.map((project) => {
+        <div className="flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {projects.map((project, index) => {
             const copy = copyFor(project.id);
-            if (!copy) return null;
+
             return (
-              <StaggerItem key={project.id}>
-                <article className="group glass rounded-2xl overflow-hidden border border-outline-variant/10 h-full flex flex-col">
-                  <div className="relative w-full">
-                    <ProjectGallery
-                      images={project.images}
-                      alt={`${copy.title} — ${copy.description}`}
-                      variant="card"
-                    />
-                  </div>
-                  <div className="p-8 flex flex-col flex-1">
-                    <h4 className="text-xl font-bold mb-3">{copy.title}</h4>
-                    <p className="text-on-surface-variant mb-6 text-sm flex-1">
-                      {copy.description}
-                    </p>
-                    <div className="flex justify-between items-center gap-4">
-                      <div className="flex gap-2 flex-wrap">
-                        {project.technologies.slice(0, 3).map((tech) => (
-                          <span
-                            key={tech}
-                            className="font-mono text-[10px] text-primary"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${t.projects.openProject}: ${copy.title}`}
-                        >
-                          <svg
-                            className="w-5 h-5 text-on-surface-variant hover:text-primary transition-colors"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={1.5}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                            />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </article>
-              </StaggerItem>
+              <button
+                key={project.id}
+                type="button"
+                onClick={() => goToProject(index)}
+                className={`min-w-[190px] rounded-2xl border px-4 py-4 text-start transition-all ${
+                  activeIndex === index
+                    ? "border-primary/40 bg-primary/10"
+                    : "border-outline-variant/10 bg-surface-container-low hover:border-outline-variant/30"
+                }`}
+                aria-pressed={activeIndex === index}
+              >
+                <p className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                  {proofLabelFor(project.proof)}
+                </p>
+                <p className="mt-2 text-base font-semibold text-on-surface">
+                  {copy.title}
+                </p>
+                <p className="mt-2 line-clamp-2 text-sm text-on-surface-variant">
+                  {copy.description}
+                </p>
+              </button>
             );
           })}
-        </StaggerChildren>
+        </div>
       </div>
     </section>
   );

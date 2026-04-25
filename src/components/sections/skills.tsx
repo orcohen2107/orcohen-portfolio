@@ -75,11 +75,14 @@ export function Skills() {
                   {ICONS[cat.icon]}
                 </div>
                 <h3 className="text-xl font-bold mb-6">{categoryLabel}</h3>
-                <ul className="space-y-3 font-mono text-xs text-on-surface-variant">
+                <ul className="space-y-1">
                   {skills[cat.key]?.map((skill) => (
-                    <li key={skill.name} className="flex items-center gap-2">
+                    <li
+                      key={skill.name}
+                      className="flex items-center gap-3 px-3 py-2 rounded-lg font-mono text-xs text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-150 group/skill cursor-default"
+                    >
                       <span
-                        className={`w-1.5 h-1.5 rounded-full ${cat.dotClass}`}
+                        className={`w-1.5 h-1.5 rounded-full shrink-0 ${cat.dotClass} group-hover/skill:scale-125 transition-transform duration-150`}
                         aria-hidden="true"
                       />
                       {skill.name}

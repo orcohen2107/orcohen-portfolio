@@ -13,9 +13,9 @@ export function About() {
 
   const stats = [
     { value: "5+", label: t.about.stats.years },
-    { value: "4+", label: t.about.stats.projects },
-    { value: "12+", label: t.about.stats.stack },
-    { value: "IDF", label: t.about.stats.unit },
+    { value: "6+", label: t.about.stats.projects },
+    { value: "Full-Stack", label: t.about.stats.stack },
+    { value: "Ofek 324", label: t.about.stats.unit },
   ] as const;
 
   return (
@@ -39,6 +39,28 @@ export function About() {
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
             />
+          </div>
+          <div className="absolute -bottom-6 -start-6 glass border border-outline-variant/20 rounded-2xl px-4 py-4 shadow-xl">
+            <div className="flex items-center gap-3">
+              <div className="relative h-14 w-14 overflow-hidden rounded-xl bg-white/95 p-1">
+                <Image
+                  src="/images/unit/ofek-324-logo-v2.png"
+                  alt="סמל אופק 324"
+                  fill
+                  className="object-contain p-1"
+                  sizes="56px"
+                  unoptimized
+                />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                  {t.about.stats.unit}
+                </p>
+                <p className="text-sm font-semibold text-on-surface">
+                  Ofek 324
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </FadeIn>

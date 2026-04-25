@@ -6,7 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import {
@@ -24,6 +24,28 @@ type LocaleContextValue = {
 };
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
+const LOCALE_CHANGE_EVENT = "localechange";
+
+function readStoredLocale(): Locale {
+  if (typeof window === "undefined") return defaultLocale;
+
+  const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+  return stored && isLocale(stored) ? stored : defaultLocale;
+}
+
+function subscribeToLocale(callback: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  window.addEventListener("storage", callback);
+  window.addEventListener(LOCALE_CHANGE_EVENT, callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(LOCALE_CHANGE_EVENT, callback);
+  };
+}
 
 function applyDocumentLocale(locale: Locale) {
   if (typeof document === "undefined") return;
@@ -33,25 +55,22 @@ function applyDocumentLocale(locale: Locale) {
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(defaultLocale);
-  const [hasHydrated, setHasHydrated] = useState(false);
+  const locale = useSyncExternalStore(
+    subscribeToLocale,
+    readStoredLocale,
+    () => defaultLocale
+  );
 
   useEffect(() => {
-    const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
-    if (stored && isLocale(stored) && stored !== defaultLocale) {
-      setLocaleState(stored);
-    }
-    setHasHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hasHydrated) return;
     applyDocumentLocale(locale);
-    localStorage.setItem(LOCALE_STORAGE_KEY, locale);
-  }, [locale, hasHydrated]);
+  }, [locale]);
 
   const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
+    if (typeof window === "undefined") return;
+
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    applyDocumentLocale(next);
+    window.dispatchEvent(new Event(LOCALE_CHANGE_EVENT));
   }, []);
 
   const value = useMemo<LocaleContextValue>(

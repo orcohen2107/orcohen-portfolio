@@ -56,9 +56,20 @@ export type Dictionary = {
   projects: {
     kicker: string;
     heading: string;
+    intro: string;
     viewProject: string;
     sourceCode: string;
     openProject: string;
+    roleLabel: string;
+    focusLabel: string;
+    proofLabel: string;
+    stackLabel: string;
+    highlightsLabel: string;
+    featuredLabel: string;
+    privateProof: string;
+    conceptProof: string;
+    publishedProof: string;
+    requestWalkthrough: string;
     gallery: {
       prev: string;
       next: string;
@@ -67,32 +78,38 @@ export type Dictionary = {
     };
     items: Record<
       string,
-      { title: string; description: string; longDescription: string }
+      {
+        title: string;
+        description: string;
+        longDescription: string;
+        role: string;
+        focus: string;
+        proofNote: string;
+        highlights: string[];
+      }
     >;
   };
   experience: {
     kicker: string;
     heading: string;
     present: string;
+    highlightsLabel: string;
     items: Record<
       string,
-      { company: string; role: string; description: string }
+      { company: string; role: string; description: string; highlights: string[] }
     >;
-  };
-  testimonials: {
-    kicker: string;
-    heading: string;
-    items: Record<string, { author: string; text: string; roleCompany: string }>;
   };
   contact: {
     kicker: string;
     heading: string;
     subtitle: string;
+    availability: string;
     name: string;
     email: string;
     message: string;
     send: string;
     sending: string;
+    hiddenField: string;
     placeholders: {
       name: string;
       email: string;
@@ -120,7 +137,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     meta: {
       title: "אור כהן | מפתח Full-Stack",
       description:
-        "תיק עבודות של אור כהן — מפתח Full-Stack עם ניסיון של 5+ שנים בבניית אפליקציות ווב ומובייל מודרניות, ממערכות צבאיות ועד פלטפורמות מבוססות AI.",
+        "תיק עבודות של אור כהן — מפתח פול סטאק עם 5 שנות ניסיון בפיתוח בצבא, ובמקביל פרויקטים אישיים בווב ובמובייל עם React, React Native, Node.js ו-Jenkins.",
     },
     skipToContent: "דלג לתוכן הראשי",
     nav: {
@@ -141,31 +158,32 @@ export const dictionaries: Record<Locale, Dictionary> = {
       en: "English",
     },
     hero: {
-      kicker: "בונים את העתיד הדיגיטלי",
+      kicker: "מפתח תוכנה שבונה מוצרים מקצה לקצה",
       tagline:
-        "מפתח Full-Stack המתמחה באפליקציות ווב בביצועים גבוהים, באפליקציות לנייד וחשיבה ארכיטקטורית.",
-      viewWork: "לצפייה בעבודות",
-      getInTouch: "בואו נדבר",
+        "חמש שנות ניסיון בפיתוח בצבא, ובמקביל עבודה על פרויקטים אישיים בווב, במובייל, וגם בכל מה שקשור ל-AI, אג'נטים ו-skills.",
+      viewWork: "לצפייה בפרויקטים",
+      getInTouch: "דברו איתי",
     },
     about: {
       kicker: "01. היכרות",
       heading: "קצת עליי",
       p1:
-        "אני מפתח ממוקד פתרונות עם תשוקה לחוויות דיגיטליות חלקות. עם 5 שנות ניסיון בפיתוח מערכות קריטיות ביחידת אופק בצה\"ל, אני משלב משמעת, עומק טכני ועין לעיצוב.",
+        "אני מפתח פול סטאק עם חמש שנות ניסיון בפיתוח בצבא. רוב העבודה שלי שם הייתה על Angular, ובמקביל בבית בניתי פרויקטים אישיים עם React ו-React Native.",
       p2:
-        "הגישה שלי מבוססת על קוד נקי, סקיילביליות ואופטימיזציה לביצועים. בין אם מדובר במערכות שיבוץ מורכבות, פלטפורמות מבוססות AI או אפליקציות מובייל — אני נהנה מאתגרים שמשפיעים על העולם האמיתי.",
+        "מעבר לפיתוח, אני מבין טוב גם בעבודה עם כלי AI, Claude, Codex, בניית אג'נטים, ובניית skills. אני יודע לקחת רעיון, לפרק אותו נכון, ולבנות ממנו משהו שעובד באמת.",
       stats: {
         years: "שנות ניסיון",
-        projects: "פרויקטים",
-        stack: "טכנולוגיות",
-        unit: 'יחידת "אופק"',
+        projects: "פרויקטים אישיים",
+        stack: "Frontend / Backend",
+        unit: "יחידת אופק, חיל האוויר",
       },
       imageAlt: "אור כהן — מפתח Full-Stack",
     },
     skills: {
       kicker: "02. יכולות",
-      heading: "סט הטכנולוגיות",
-      subtitle: "ארגז כלים מקיף של טכנולוגיות מודרניות להפיכת רעיונות למציאות.",
+      heading: "טכנולוגיות שאני עובד איתן",
+      subtitle:
+        "אלה הכלים שאני באמת עובד איתם, גם בפיתוח בצבא וגם בפרויקטים האישיים.",
       categories: {
         frontend: "צד לקוח",
         backend: "צד שרת",
@@ -174,11 +192,23 @@ export const dictionaries: Record<Locale, Dictionary> = {
       },
     },
     projects: {
-      kicker: "03. תצוגה",
+      kicker: "03. עבודות",
       heading: "פרויקטים נבחרים",
+      intro:
+        "אני מעדיף להציג פרויקטים כמו שהם. איפה יש צילומי מסך אמיתיים אני מראה אותם, ואיפה אין דמו ציבורי אני אומר את זה ישירות.",
       viewProject: "לצפייה בפרויקט",
       sourceCode: "קוד מקור",
       openProject: "פתח פרויקט",
+      roleLabel: "מה עשיתי",
+      focusLabel: "על מה שמתי דגש",
+      proofLabel: "מה אפשר לראות",
+      stackLabel: "סטאק",
+      highlightsLabel: "מה יש במוצר",
+      featuredLabel: "פרויקט מרכזי",
+      privateProof: "מוצר פרטי",
+      conceptProof: "פרויקט אישי / קונספט",
+      publishedProof: "זמין בחנויות",
+      requestWalkthrough: "אם צריך, אפשר לעבור על זה יחד בשיחה.",
       gallery: {
         prev: "תמונה קודמת",
         next: "תמונה הבאה",
@@ -189,30 +219,98 @@ export const dictionaries: Record<Locale, Dictionary> = {
         smartshift: {
           title: "SmartShift",
           description:
-            "מערכת לניהול משמרות עם שיבוץ אוטומטי, אילוצים וסוגי תפקידים.",
+            "מערכת לניהול משמרות עם שיבוץ, אילוצים וסוגי תפקידים.",
           longDescription:
-            "פלטפורמה לניהול משמרות לארגונים מורכבים: שיבוץ אוטומטי תחת אילוצים, תמיכה בסוגי תפקידים שונים ופתרון קונפליקטים — מותאמת לצרכים אמיתיים בקנה מידה גדול.",
+            "המערכת נבנתה סביב צורך תפעולי אמיתי: לרכז זמינות, אילוצים ותפקידים במקום אחד, ולעזור למי שמכין משמרות לעבוד יותר מסודר ויותר מהר.",
+          role: "אפיון, פיתוח full-stack ובניית המסכים המרכזיים.",
+          focus: "לפתור בעיית שיבוץ אמיתית בלי לסבך את המשתמש.",
+          proofNote:
+            "המערכת פרטית, לכן מוצגים כאן צילומי מסך ולא דמו פתוח.",
+          highlights: [
+            "שיבוץ משמרות עם אילוצים",
+            "תמיכה בכמה סוגי תפקידים",
+            "ממשק פשוט יחסית למערכת מורכבת",
+          ],
         },
         playsmart: {
           title: "PlaySmart",
           description:
-            "מערכת AI למאמנים לבחירת הרכב למשחק הבא לפי סטטיסטיקות וכושר נוכחי.",
+            "מערכת לבחירת הרכב לפי נתונים, כושר וזמינות שחקנים.",
           longDescription:
-            "מסייעת למאמנים לקבל החלטות מבוססות נתונים: ניתוח ביצועי שחקנים, רמת כושר נוכחית והיסטוריה, והמלצות AI להרכב האופטימלי לכל משחק.",
+            "זה פרויקט אישי שמנסה לקחת נתונים על שחקנים, כושר וזמינות, ולהפוך אותם לכלי שעוזר לקבל החלטה לפני משחק.",
+          role: "הגדרת הרעיון, full-stack ובניית הזרימה המרכזית.",
+          focus: "להפוך נתונים למשהו שקל להבין ולעבוד איתו.",
+          proofNote:
+            "כרגע זה מוצג כפרויקט אישי ולא כמערכת ציבורית פעילה.",
+          highlights: [
+            "שקלול נתונים על שחקנים",
+            "התייחסות לזמינות ולכושר",
+            "מסך ברור לקבלת החלטה",
+          ],
         },
         sportzone: {
           title: "SportZone",
           description:
-            "רשת חברתית לאוהדי ספורט — מעקב אחרי קבוצות ושחקנים, פוסטים וקהילה.",
+            "אפליקציה לאוהדי ספורט עם פיד, מעקב וקהילה.",
           longDescription:
-            "אפליקציה לאוהדים: מעקב אחר קבוצות ושחקנים, פוסטים בפיד אישי או בעמוד קבוצה, ותמיכה בפרופילים פרטיים וחשבונות קבוצה/סלבריטאים.",
+            "הפרויקט הזה בודק איך בונים חוויית מובייל סביב תוכן וקהילה: פידים, פרופילים, קבוצות ושחקנים במקום אחד.",
+          role: "פיתוח mobile-first ובניית המבנה הראשי של האפליקציה.",
+          focus: "לבנות אפליקציה שקל לחזור אליה דרך תוכן וקהילה.",
+          proofNote:
+            "זה פרויקט אישי, ואין כרגע גרסה ציבורית פתוחה.",
+          highlights: [
+            "פיד אישי ופידים לפי קבוצה",
+            "פרופילי משתמשים",
+            "מבנה שמחבר תוכן ומעקב",
+          ],
         },
         "poop-bags": {
           title: "Poop Bags",
           description:
-            "אפליקציה לבעלי כלבים — שיתוף תחנות שקיות, לייקים, תגובות ומפה.",
+            "אפליקציה קהילתית לבעלי כלבים עם מיקומים, עדכונים ומפה.",
           longDescription:
-            "קהילה לבעלי כלבים: שיתוף מיקומי תחנות שקיות, פוסטים עם לייקים ותגובות, וצפייה בכל התחנות במפה אינטראקטיבית.",
+            "זה רעיון למוצר קטן אבל שימושי: לראות איפה יש תחנות שקיות, לעדכן מהשטח, ולעשות את זה דרך ממשק פשוט במובייל.",
+          role: "הגדרת ה-MVP, flow של המוצר, וחיבור בין מפה לתוכן.",
+          focus: "לקחת צורך קטן ויומיומי ולבנות סביבו מוצר ברור.",
+          proofNote:
+            "כרגע זה מוצג כפרויקט אישי ברמת MVP.",
+          highlights: [
+            "מפה עם מיקומים",
+            "עדכונים קהילתיים",
+            "MVP פשוט וברור",
+          ],
+        },
+        "zvi-kadocs": {
+          title: "DocMatch",
+          description:
+            "אפליקציה פנימית שעוזרת לעשות סדר בין מספרי תעודות לבין הדוח שמגיע בסוף החודש.",
+          longDescription:
+            "בנייתי את האפליקציה הזאת עבור אבא שלי כדי לחסוך עבודה ידנית. במהלך החודש הוא רושם את מספרי התעודות שהוא עובד איתם, ובסוף החודש מעלה את קובץ ה-PDF שהוא מקבל מהעבודה. המערכת משווה בין הרשימות ועוזרת לזהות התאמות, חוסרים, ומה קיים בצד אחד ולא בצד השני.",
+          role: "אפיון הצורך, פיתוח המערכת ובניית תהליך ההשוואה.",
+          focus: "לחסוך עבודה ידנית ולעשות סדר בתהליך חודשי שחוזר על עצמו.",
+          proofNote:
+            "זה כלי פנימי שנבנה לשימוש אמיתי, ולכן כרגע אין לו דמו ציבורי.",
+          highlights: [
+            "שמירה מסודרת של מספרי תעודות",
+            "העלאת PDF והשוואה מול הרשימה שנשמרה",
+            "זיהוי חסרים, התאמות וחריגות",
+          ],
+        },
+        shalachti: {
+          title: "שלחתי",
+          description:
+            "מערכת עם שתי אפליקציות: אחת לנהגים ואחת ללקוחות, סביב יצירה ובחירה של משלוחים.",
+          longDescription:
+            "זה פרויקט שבנוי כשתי אפליקציות נפרדות: 'שלחתי נהגים' ו'שלחתי לקוחות'. הנהגים יכולים לראות משלוחים זמינים, לבחור משלוח, לראות פרטים רלוונטיים וליצור קשר. בצד השני, הלקוחות יכולים לפתוח משלוחים ולנהל את התהליך. לפי מה שסיפרת, האפליקציות זמינות גם ב-App Store וגם ב-Google Play.",
+          role: "אפיון, פיתוח האפליקציות, ובניית הזרימה לשני סוגי המשתמשים.",
+          focus: "לבנות מוצר ברור שמחבר בין מי שמפרסם משלוח לבין הנהג שלוקח אותו.",
+          proofNote:
+            "האפליקציות זמינות בחנויות, וצילומי מסך יצורפו בהמשך.",
+          highlights: [
+            "אפליקציה לנהגים ואפליקציה ללקוחות",
+            "צפייה במשלוחים זמינים ובחירת משלוח",
+            "יצירת משלוחים וניהול התהליך מצד הלקוח",
+          ],
         },
       },
     },
@@ -220,59 +318,44 @@ export const dictionaries: Record<Locale, Dictionary> = {
       kicker: "04. מסלול",
       heading: "ניסיון מקצועי",
       present: "היום",
+      highlightsLabel: "דגשים",
       items: {
         "idf-ofek": {
-          company: 'צה"ל — יחידת אופק',
+          company: 'צה"ל',
           role: "מפתח Full-Stack",
           description:
-            "פיתוח ותחזוקה של מערכות קריטיות ברמת אמינות גבוהה. אפליקציות full-stack עם זרימות נתונים מורכבות, דרישות אבטחה וסביבה דינמית.",
-        },
-      },
-    },
-    testimonials: {
-      kicker: "05. המלצות",
-      heading: "מה אומרים",
-      items: {
-        "1": {
-          author: "James Smith",
-          text:
-            "אור מפתח יוצא דופן שמבין את האיזון בין קוד נקי ליעדים עסקיים. העבודה שלו על פלטפורמת האנליטיקה שינתה את המשחק.",
-          roleCompany: "מנהל טכנולוגיות, Nexus Corp",
-        },
-        "2": {
-          author: "Sarah Chen",
-          text:
-            "עומק טכני ותשומת לפרטים נדירים. הפרויקט הושלם לפני הזמן ובביצוע מושלם.",
-          roleCompany: "מנהלת מוצר, Flow Studio",
-        },
-        "3": {
-          author: "Marcus Reed",
-          text:
-            "מהנדס רב־תחומי. אור ניהל הכל — מתשתית ענן ועד CSS מדויק.",
-          roleCompany: "מהנדס מייסד, Velox",
+            "בצבא עבדתי על מערכות פנימיות עם אחריות אמיתית, דרישות יציבות, ומשתמשים שבאמת עובדים עם המערכת ביום-יום.",
+          highlights: [
+            "עבודה שוטפת על Angular",
+            "פיתוח full-stack סביב מערכות פנימיות",
+            "עבודה עם Jenkins ו-CI/CD",
+          ],
         },
       },
     },
     contact: {
-      kicker: "06. קשר",
+      kicker: "05. קשר",
       heading: "בואו נעבוד יחד",
       subtitle:
-        "יש לכם רעיון לפרויקט או סתם רוצים להגיד שלום? תמיד פתוח להזדמנויות ושיתופי פעולה.",
+        "אם יש לכם פרויקט, רעיון, או תפקיד רלוונטי, אפשר לשלוח הודעה.",
+      availability:
+        "עדיף לכתוב בקצרה מה אתם בונים, באיזה שלב אתם נמצאים, ואיך אני יכול לעזור.",
       name: "שם",
       email: "אימייל",
       message: "הודעה",
       send: "שלח הודעה",
       sending: "שולח...",
+      hiddenField: "השאר ריק",
       placeholders: {
         name: "ישראל ישראלי",
         email: "you@example.com",
-        message: "ספרו לי על הפרויקט...",
+        message: "ספרו לי על הפרויקט שלכם...",
       },
       form: {
         errorRequired: "יש למלא את כל השדות.",
         errorEmail: "נא להזין כתובת אימייל תקינה.",
         success: "ההודעה נשלחה בהצלחה! אחזור אליך בקרוב.",
-        errorGeneric: "משהו השתבש. נסה שוב או שלח אימייל ישירות.",
+        errorGeneric: "אירעה שגיאה. נסה שוב מאוחר יותר, או שלח אימייל ישירות.",
       },
     },
     footer: {
@@ -280,7 +363,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     notFound: {
       title: "404",
-      subtitle: "הדף הזה לא קיים.",
+      subtitle: "העמוד המבוקש אינו קיים.",
       home: "חזרה לדף הבית",
     },
   },
@@ -288,7 +371,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     meta: {
       title: "Or Cohen | Full-Stack Developer",
       description:
-        "Portfolio of Or Cohen — a full-stack developer with 5+ years of experience building modern web and mobile applications, from military-grade systems to AI-powered platforms.",
+        "Portfolio of Or Cohen — 5 years of military development experience, plus personal projects built with React, React Native, Node.js, and Jenkins.",
     },
     skipToContent: "Skip to main content",
     nav: {
@@ -309,9 +392,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
       en: "English",
     },
     hero: {
-      kicker: "Building the Digital Future",
+      kicker: "Software developer building products end to end",
       tagline:
-        "Full-Stack Developer specializing in high-performance web applications, mobile apps, and architectural thinking.",
+        "5 years of development experience in the military, alongside personal web and mobile projects and hands-on work with AI tools, agents, and skills.",
       viewWork: "View My Work",
       getInTouch: "Get in Touch",
     },
@@ -319,22 +402,22 @@ export const dictionaries: Record<Locale, Dictionary> = {
       kicker: "01. Discovery",
       heading: "About Me",
       p1:
-        "I'm a solution-oriented developer with a passion for creating seamless digital experiences. With 5 years of experience building mission-critical systems in the IDF's Unit Ofek, I bring a unique combination of discipline, technical depth, and a keen eye for design.",
+        "I'm a full-stack developer with 5 years of development experience in the military. Most of my work there was frontend with Angular, and at home I built personal projects with React and React Native.",
       p2:
-        "My approach is rooted in clean code, scalability, and performance optimization. Whether it's architecting complex scheduling systems, building AI-powered platforms, or crafting pixel-perfect mobile apps, I thrive on solving technical challenges that make a real-world impact.",
+        "Beyond product development, I'm also strong in AI workflows, Claude, Codex, agent building, and skill creation. I know how to take an idea, break it down well, and turn it into something that actually works.",
       stats: {
         years: "Years Experience",
-        projects: "Projects Delivered",
-        stack: "Tech Stack Mastery",
-        unit: "Unit Ofek",
+        projects: "Personal Projects",
+        stack: "Frontend / Backend",
+        unit: "Ofek Unit, Air Force",
       },
       imageAlt: "Or Cohen — Full-Stack Developer",
     },
     skills: {
       kicker: "02. Capabilities",
-      heading: "Tech Stack",
+      heading: "Technologies I Actually Use",
       subtitle:
-        "A comprehensive toolkit of modern technologies I use to bring ideas to life.",
+        "These are the tools I actually worked with, both in military development and in personal projects.",
       categories: {
         frontend: "Frontend",
         backend: "Backend",
@@ -345,9 +428,21 @@ export const dictionaries: Record<Locale, Dictionary> = {
     projects: {
       kicker: "03. Showcase",
       heading: "Featured Projects",
+      intro:
+        "I prefer to show projects as they are. Where I have real screenshots, I show them. Where there is no public demo, I say that directly.",
       viewProject: "View Project",
       sourceCode: "Source Code",
       openProject: "Open project",
+      roleLabel: "My part",
+      focusLabel: "Main focus",
+      proofLabel: "What you can see",
+      stackLabel: "Stack",
+      highlightsLabel: "Inside the product",
+      featuredLabel: "Main project",
+      privateProof: "Private product",
+      conceptProof: "Personal project / concept",
+      publishedProof: "Published app",
+      requestWalkthrough: "I can walk through it in a conversation if needed.",
       gallery: {
         prev: "Previous image",
         next: "Next image",
@@ -358,30 +453,98 @@ export const dictionaries: Record<Locale, Dictionary> = {
         smartshift: {
           title: "SmartShift",
           description:
-            "An intelligent shift management system with automated scheduling, constraints handling, and role-based assignments.",
+            "A shift management system with scheduling, constraints, and role-based assignments.",
           longDescription:
-            "A comprehensive shift management platform designed for complex organizational needs. Features automatic shift assignment with constraint satisfaction, support for multiple role types, and smart conflict resolution. Built to handle real-world scheduling challenges at scale.",
+            "This project was built around a real operational need: putting availability, roles, and constraints in one place so the person building shifts can work faster and with less friction.",
+          role: "Planning, full-stack development, and the main product screens.",
+          focus: "Solving a real scheduling problem without making the product feel complicated.",
+          proofNote:
+            "The product is private, so this section uses screenshots instead of a public demo.",
+          highlights: [
+            "Scheduling with constraints",
+            "Support for multiple role types",
+            "A UI that stays clear under operational pressure",
+          ],
         },
         playsmart: {
           title: "PlaySmart",
           description:
-            "AI-powered coaching assistant that analyzes player statistics and recommends optimal lineups based on current fitness data.",
+            "A product for choosing lineups based on player data, fitness, and availability.",
           longDescription:
-            "A system that helps coaches make data-driven decisions for game lineups. Analyzes player performance statistics, current fitness levels, and historical data to provide AI-generated recommendations for the best team composition for each upcoming match.",
+            "This personal project started from a simple idea: take player data, fitness state, and availability, and turn them into something useful before a match.",
+          role: "Defining the product, building the flow, and implementing the full-stack side.",
+          focus: "Making data easier to act on.",
+          proofNote:
+            "Right now this is shown as a personal project rather than a live public system.",
+          highlights: [
+            "Player data in one place",
+            "Availability and fitness context",
+            "A simple decision-oriented flow",
+          ],
         },
         sportzone: {
           title: "SportZone",
           description:
-            "A social platform for sports fans to follow teams, players, and connect with fellow supporters through posts and community feeds.",
+            "A sports app built around content, follow flows, and community.",
           longDescription:
-            "A social media application tailored for sports enthusiasts. Users can follow their favorite teams and players, create posts on their personal feed or team pages, and engage with a community of like-minded fans. Supports both individual profiles and celebrity/team accounts.",
+            "This was a mobile-first idea for sports fans: feeds, profiles, follow flows, and a simple community layer around teams and players.",
+          role: "Mobile-oriented development and the main app structure.",
+          focus: "Keeping the app clear while still making it feel social.",
+          proofNote:
+            "This is a personal project, and there is no public build at the moment.",
+          highlights: [
+            "Feeds and follow flows",
+            "User profiles",
+            "A simple content-and-community structure",
+          ],
         },
         "poop-bags": {
           title: "Poop Bags",
           description:
-            "A community-driven app for dog owners to share and locate poop bag station locations, with social features and an interactive map.",
+            "A small community utility for dog owners with locations, updates, and a map.",
           longDescription:
-            "A mobile application that creates a community for dog owners. Users can share poop bag station locations, post updates about stations, like and comment on posts, and view all stations on an interactive map. Makes daily dog walks easier for the whole community.",
+            "This started from a very practical daily-use idea: show where bag stations are, let people update each other, and keep the product simple enough to use quickly.",
+          role: "Defining the MVP, shaping the flow, and connecting the map with the content.",
+          focus: "Taking a small everyday problem and making it useful as a product.",
+          proofNote:
+            "This is currently presented as an MVP-level personal project.",
+          highlights: [
+            "Map-based locations",
+            "Lightweight community updates",
+            "A simple MVP structure",
+          ],
+        },
+        "zvi-kadocs": {
+          title: "DocMatch",
+          description:
+            "An internal app that helps organize document numbers against the monthly PDF report.",
+          longDescription:
+            "I built this app for my father to reduce manual monthly work. During the month he records the document numbers he works with, and at the end of the month he uploads the PDF file he receives from work. The system compares the two sides and helps identify matches, missing items, and anything that exists on one side but not the other.",
+          role: "Understanding the workflow, building the app, and implementing the comparison flow.",
+          focus: "Saving manual work in a recurring monthly process.",
+          proofNote:
+            "This is an internal-use tool, so there is no public demo at the moment.",
+          highlights: [
+            "Structured tracking of document numbers",
+            "PDF upload and comparison against the saved list",
+            "Finding mismatches, missing items, and overlaps",
+          ],
+        },
+        shalachti: {
+          title: "Shalachti",
+          description:
+            "A delivery workflow built as two apps: one for drivers and one for customers.",
+          longDescription:
+            "This project includes two separate apps: 'Shalachti Drivers' and 'Shalachti Customers'. Drivers can browse available deliveries, choose one, see the relevant contact details, and continue from there. On the customer side, users can create deliveries and manage the process. Based on what you shared, the apps are available on both the App Store and Google Play.",
+          role: "Planning the product, building the apps, and shaping the flow for both user types.",
+          focus: "Making the delivery flow clear for both drivers and customers.",
+          proofNote:
+            "The apps are published in the stores, and screenshots will be added later.",
+          highlights: [
+            "Separate app for drivers and app for customers",
+            "Viewing and choosing available deliveries",
+            "Creating deliveries and managing them on the customer side",
+          ],
         },
       },
     },
@@ -389,49 +552,34 @@ export const dictionaries: Record<Locale, Dictionary> = {
       kicker: "04. Journey",
       heading: "Professional Experience",
       present: "Present",
+      highlightsLabel: "Highlights",
       items: {
         "idf-ofek": {
-          company: "IDF — Unit Ofek",
+          company: "IDF",
           role: "Full-Stack Developer",
           description:
-            "Developed and maintained mission-critical military-grade systems. Built full-stack applications handling complex data flows with high reliability and security requirements. Worked in a fast-paced environment delivering solutions for operational needs.",
-        },
-      },
-    },
-    testimonials: {
-      kicker: "05. Feedback",
-      heading: "What People Say",
-      items: {
-        "1": {
-          author: "James Smith",
-          text:
-            "Or is an exceptional developer who understands the balance between clean code and business objectives. His work on our analytics platform was transformative.",
-          roleCompany: "CTO, Nexus Corp",
-        },
-        "2": {
-          author: "Sarah Chen",
-          text:
-            "The level of technical depth and attention to detail Or brings to the table is rare. He delivered our project ahead of schedule with flawless execution.",
-          roleCompany: "Product Manager, Flow Studio",
-        },
-        "3": {
-          author: "Marcus Reed",
-          text:
-            "A truly versatile engineer. Or handled everything from the complex cloud infrastructure to the pixel-perfect CSS with incredible ease.",
-          roleCompany: "Founding Engineer, Velox",
+            "In the military I worked on internal systems with real responsibility, real users, and no room for vague solutions.",
+          highlights: [
+            "Day-to-day Angular development",
+            "Full-stack work around internal systems",
+            "Jenkins and CI/CD as part of the workflow",
+          ],
         },
       },
     },
     contact: {
-      kicker: "06. Connection",
+      kicker: "05. Connection",
       heading: "Let's Work Together",
       subtitle:
-        "Have a project in mind or just want to say hi? I'm always open to new opportunities and collaborations.",
+        "If you have a project, a relevant role, or something worth talking about, send a message.",
+      availability:
+        "The best message is short and clear: what you're building, what stage you're in, and where I can help.",
       name: "Name",
       email: "Email",
       message: "Message",
       send: "Send Message",
       sending: "Sending...",
+      hiddenField: "Leave this empty",
       placeholders: {
         name: "John Doe",
         email: "john@example.com",

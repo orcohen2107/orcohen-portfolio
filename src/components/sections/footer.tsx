@@ -1,5 +1,8 @@
 "use client";
 
+import { AArrowUpIcon } from "@/components/ui/a-arrow-up";
+import { GithubIcon } from "@/components/ui/github";
+import { LinkedinIcon } from "@/components/ui/linkedin";
 import { useLocale } from "@/i18n/locale-provider";
 
 export function Footer() {
@@ -17,39 +20,29 @@ export function Footer() {
             href="https://github.com/orcohen2107"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/50 hover:text-on-surface transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/50 hover:text-on-surface transition-colors"
           >
+            <GithubIcon size={18} className="text-current" />
             GitHub
           </a>
           <a
             href="https://www.linkedin.com/in/or-cohen-05aa42236/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/50 hover:text-on-surface transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/50 hover:text-on-surface transition-colors"
           >
+            <LinkedinIcon size={18} className="text-current" />
             LinkedIn
           </a>
         </div>
 
         <a
-          href="#"
+          href="#page-top"
           className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-primary group"
           aria-label={t.footer.backToTop}
         >
           {t.footer.backToTop}
-          <svg
-            className="w-3 h-3 group-hover:-translate-y-1 transition-transform"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 10l7-7m0 0l7 7m-7-7v18"
-            />
-          </svg>
+          <AArrowUpIcon size={18} className="text-primary" />
         </a>
       </div>
     </footer>

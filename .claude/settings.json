@@ -1,0 +1,20 @@
+{
+  "enabledPlugins": {
+    "superpowers@superpowers-dev": true
+  },
+  "extraKnownMarketplaces": {
+    "superpowers-dev": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers",
+        "path": ".claude-plugin/marketplace.json"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Read(//Users/orcohen/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/.claude/skills/ui-ux-pro-max/**)",
+      "Bash(python3 scripts/search.py \"scroll animation entrance stagger motion\" --domain ux -n 6 -f markdown)"
+    ]
+  }
+}

@@ -4,9 +4,9 @@ export const siteConfig: SiteConfig = {
   name: "Or Cohen",
   title: "Or Cohen | Full-Stack Developer",
   tagline:
-    "Full-Stack Developer specializing in high-performance web applications, mobile apps, and architectural thinking.",
+    "Software developer building products end to end.",
   description:
-    "Portfolio of Or Cohen — a full-stack developer with 5+ years of experience building modern web and mobile applications, from military-grade systems to AI-powered platforms.",
+    "Portfolio of Or Cohen — military development experience, personal web and mobile projects, and hands-on work with AI tooling, agents, and skills.",
   email: "orcohen2107@gmail.com",
   url: "https://orcohen.dev",
   socials: [

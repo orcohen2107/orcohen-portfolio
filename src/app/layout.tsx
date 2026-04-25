@@ -52,7 +52,7 @@ export default function RootLayout({
       className={cn("dark", inter.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
-      <body>
+      <body id="page-top">
         <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>

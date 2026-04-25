@@ -1,8 +1,5 @@
 export type Project = {
   id: string;
-  title: string;
-  description: string;
-  longDescription: string;
   technologies: string[];
   /** Screenshots — horizontal gallery; first image is the cover */
   images: string[];
@@ -10,6 +7,7 @@ export type Project = {
   githubUrl?: string;
   featured: boolean;
   category: "web" | "mobile" | "backend" | "fullstack";
+  proof: "private" | "concept" | "published";
 };
 
 export type Experience = {
@@ -28,15 +26,6 @@ export type Skill = {
   category: "frontend" | "backend" | "devops" | "tools";
 };
 
-export type Testimonial = {
-  id: string;
-  author: string;
-  role: string;
-  company: string;
-  text: string;
-  initials: string;
-};
-
 export type SocialLink = {
   platform: "github" | "linkedin" | "email";
   url: string;
@@ -51,4 +40,5 @@ export type SiteConfig = {
   email: string;
   socials: SocialLink[];
   url: string;
+  resumeUrl?: string;
 };

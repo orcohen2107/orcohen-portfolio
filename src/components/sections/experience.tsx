@@ -91,6 +91,22 @@ export function Experience() {
                     <p className="text-on-surface-variant text-sm mb-6">
                       {copy.description}
                     </p>
+                    <div className="mb-6">
+                      <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                        {t.experience.highlightsLabel}
+                      </p>
+                      <ul className="space-y-3 text-sm text-on-surface-variant">
+                        {copy.highlights.map((highlight) => (
+                          <li key={highlight} className="flex items-start gap-3">
+                            <span
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                              aria-hidden="true"
+                            />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech) => (
                         <span

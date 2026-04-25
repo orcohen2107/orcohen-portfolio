@@ -2,30 +2,31 @@ import type { Skill } from "@/types";
 
 export const skills: Record<string, Skill[]> = {
   frontend: [
-    { name: "React / Next.js", category: "frontend" },
-    { name: "TypeScript", category: "frontend" },
-    { name: "Tailwind CSS", category: "frontend" },
+    { name: "Angular", category: "frontend" },
+    { name: "React", category: "frontend" },
+    { name: "Next.js", category: "frontend" },
     { name: "React Native", category: "frontend" },
-    { name: "Framer Motion", category: "frontend" },
+    { name: "TypeScript", category: "frontend" },
   ],
   backend: [
-    { name: "Node.js / Express", category: "backend" },
-    { name: "PostgreSQL / MongoDB", category: "backend" },
-    { name: "Python / FastAPI", category: "backend" },
-    { name: "GraphQL", category: "backend" },
+    { name: "Node.js", category: "backend" },
+    { name: "Express", category: "backend" },
     { name: "REST APIs", category: "backend" },
+    { name: "PostgreSQL", category: "backend" },
+    { name: "MongoDB", category: "backend" },
   ],
   devops: [
-    { name: "AWS / Vercel", category: "devops" },
+    { name: "Jenkins", category: "devops" },
     { name: "Docker", category: "devops" },
-    { name: "CI/CD Pipelines", category: "devops" },
+    { name: "CI/CD", category: "devops" },
+    { name: "Vercel", category: "devops" },
     { name: "Firebase", category: "devops" },
   ],
   tools: [
     { name: "Git / GitHub", category: "tools" },
-    { name: "Figma", category: "tools" },
-    { name: "Jest / Cypress", category: "tools" },
     { name: "Postman", category: "tools" },
+    { name: "Tailwind CSS", category: "tools" },
+    { name: "SQL", category: "tools" },
   ],
 };
 

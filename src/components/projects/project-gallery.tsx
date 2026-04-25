@@ -63,33 +63,40 @@ export function ProjectGallery({ images, alt, variant }: ProjectGalleryProps) {
     if (slides.length <= 1) return;
     if (e.key === "ArrowLeft") {
       e.preventDefault();
-      document.documentElement.dir === "rtl" ? goNext() : goPrev();
+      if (document.documentElement.dir === "rtl") {
+        goNext();
+      } else {
+        goPrev();
+      }
     }
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      document.documentElement.dir === "rtl" ? goPrev() : goNext();
+      if (document.documentElement.dir === "rtl") {
+        goPrev();
+      } else {
+        goNext();
+      }
     }
   };
 
   const showChrome = slides.length > 1;
 
-  const minHeightClass =
-    variant === "featured" ? "min-h-[280px] sm:min-h-[360px] lg:min-h-[400px]" : "";
-  const aspectClass = variant === "card" ? "aspect-video" : "";
-
   if (slides.length === 0) {
     return (
-      <div
-        className={`flex w-full items-center justify-center rounded-xl bg-surface-container-high text-on-surface-variant text-sm ${aspectClass} ${minHeightClass} min-h-[200px]`}
-      >
+      <div className="flex min-h-[200px] w-full items-center justify-center rounded-xl bg-surface-container-high text-on-surface-variant text-sm aspect-video">
         —
       </div>
     );
   }
 
+  const outerClassName =
+    variant === "featured"
+      ? "relative h-[min(55vh,520px)] min-h-[300px] w-full overflow-hidden rounded-xl sm:min-h-[360px]"
+      : "relative aspect-video w-full overflow-hidden rounded-xl";
+
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-xl ${aspectClass} ${minHeightClass}`}
+      className={outerClassName}
       onKeyDown={onKeyDown}
       role="region"
       aria-roledescription="carousel"
@@ -98,7 +105,8 @@ export function ProjectGallery({ images, alt, variant }: ProjectGalleryProps) {
     >
       <div
         ref={scrollerRef}
-        className="flex h-full w-full overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        dir="ltr"
+        className="absolute inset-0 flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((src, i) => (
           <div
@@ -106,15 +114,17 @@ export function ProjectGallery({ images, alt, variant }: ProjectGalleryProps) {
             className="relative h-full min-w-full shrink-0 snap-center snap-always"
           >
             <Image
+              key={src}
               src={src}
               alt={`${alt} — ${i + 1}`}
               fill
-              className="object-cover"
+              className="object-cover object-top"
               sizes={
                 variant === "featured"
                   ? "(max-width: 1024px) 100vw, 50vw"
                   : "(max-width: 768px) 100vw, 50vw"
               }
+              priority={variant === "featured" && i === 0}
             />
           </div>
         ))}

@@ -6,6 +6,8 @@ import { dictionaries } from "@/i18n/dictionaries";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const TO_EMAIL = process.env.CONTACT_EMAIL ?? "orcohen2107@gmail.com";
+const MAX_MESSAGE_LENGTH = 4000;
+const MIN_MESSAGE_LENGTH = 20;
 
 type ContactState = {
   success: boolean;
@@ -24,6 +26,11 @@ export async function sendMessage(
 ): Promise<ContactState> {
   const locale = getLocale(formData);
   const form = dictionaries[locale].contact.form;
+  const honeypot = formData.get("company");
+
+  if (typeof honeypot === "string" && honeypot.trim().length > 0) {
+    return { success: true, message: form.success };
+  }
 
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
@@ -36,6 +43,21 @@ export async function sendMessage(
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return { success: false, message: form.errorEmail };
+  }
+
+  if (message.trim().length < MIN_MESSAGE_LENGTH) {
+    return { success: false, message: form.errorRequired };
+  }
+
+  if (message.length > MAX_MESSAGE_LENGTH) {
+    return { success: false, message: form.errorGeneric };
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    return {
+      success: false,
+      message: form.errorGeneric,
+    };
   }
 
   try {
